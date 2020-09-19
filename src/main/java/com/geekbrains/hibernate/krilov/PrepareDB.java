@@ -16,10 +16,10 @@ public class PrepareDB {
                 .buildSessionFactory();
         Session session = null;
         try {
-            String sql = Files.lines(Paths.get("new.sql")).collect(Collectors.joining(" "));
+            String sql = Files.lines(Paths.get("new.sql")).collect(Collectors.joining("\n"));
             session = factory.getCurrentSession();
             session.beginTransaction();
-            session.createNativeQuery(sql).executeUpdate();
+            session.createSQLQuery(sql).executeUpdate();
             session.getTransaction().commit();
         } catch (IOException e) {
             e.printStackTrace();

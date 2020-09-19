@@ -1,7 +1,4 @@
-BEGIN;
-
 CREATE SCHEMA IF NOT EXISTS hibernate;
-
 DROP TABLE IF EXISTS hibernate.products CASCADE;
 CREATE TABLE hibernate.products (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), price DECIMAL);
 INSERT INTO hibernate.products (name, price) VALUES
@@ -39,5 +36,3 @@ INSERT INTO hibernate.customer_products (customer_id, product_id, dealPrice) VAL
 (4, 8, 79.90),
 (4, 9, 33.00),
 (4, 10, 100.49);
-
-COMMIT;

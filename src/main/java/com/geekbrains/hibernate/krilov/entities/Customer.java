@@ -20,9 +20,7 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-
     private List<Product> cart;
-
 
     public Long getId() {
         return id;
@@ -44,7 +42,7 @@ public class Customer {
         return cart;
     }
 
-    public void setProducts(List<Product> cart) {
+    public void setCart(List<Product> cart) {
         this.cart = cart;
     }
 

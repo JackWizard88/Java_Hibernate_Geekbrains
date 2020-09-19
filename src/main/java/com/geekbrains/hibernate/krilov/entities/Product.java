@@ -1,6 +1,7 @@
 package com.geekbrains.hibernate.krilov.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -14,11 +15,16 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", precision=10, scale=2)
     private double price;
 
-    public Product() {
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "customer_products",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    private List<Customer> customers;
 
     public Long getId() {
         return id;
@@ -44,8 +50,19 @@ public class Product {
         this.price = price;
     }
 
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public Product() {
+    }
+
     @Override
     public String toString() {
-        return String.format("Product [id = %d, name = %s, price = %d]", id, name, price);
+        return String.format("Product [id = %d, name = %s, price = %s]", id, name, price);
     }
 }

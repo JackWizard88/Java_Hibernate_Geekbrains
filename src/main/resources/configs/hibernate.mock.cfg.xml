@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost?serverTimezone=Europe/Moscow</property>
+        <property name="connection.url">jdbc:mysql://localhost/hibernate?serverTimezone=Europe/Moscow</property>
         <property name="connection.username">USERNAME</property>
         <property name="connection.password">PASSWORD</property>
         <property name="connection.pool_size">2</property>
