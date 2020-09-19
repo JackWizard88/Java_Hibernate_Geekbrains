@@ -22,6 +22,17 @@ public class Customer {
     )
     private List<Product> cart;
 
+    @OneToMany(mappedBy = "customer_id")
+    private List<Deal> dealPrices;
+
+    public List<Deal> getDealPrices() {
+        return dealPrices;
+    }
+
+    public void setDealPrices(List<Deal> dealPrices) {
+        this.dealPrices = dealPrices;
+    }
+
     public Long getId() {
         return id;
     }

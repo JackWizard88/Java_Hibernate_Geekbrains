@@ -1,4 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS hibernate;
+BEGIN;
+SET FOREIGN_KEY_CHECKS=0;
+CREATE DATABASE IF NOT EXISTS hibernate;
 DROP TABLE IF EXISTS hibernate.products CASCADE;
 CREATE TABLE hibernate.products (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), price DECIMAL);
 INSERT INTO hibernate.products (name, price) VALUES
@@ -13,7 +15,7 @@ INSERT INTO hibernate.products (name, price) VALUES
 ('Potatoes', 49.00),
 ('Eggs', 130.49);
 
-DROP TABLE IF EXISTS hibernate.customers CASCADE;
+DROP TABLE IF EXISTS hibernate.customers;
 CREATE TABLE hibernate.customers (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255));
 INSERT INTO hibernate.customers (name) VALUES
 ('Tom'),
@@ -21,8 +23,8 @@ INSERT INTO hibernate.customers (name) VALUES
 ('Edd'),
 ('Bob');
 
-DROP TABLE IF EXISTS hibernate.customer_products CASCADE;
-CREATE TABLE hibernate.customer_products (customer_id INT NOT NULL, product_id INT NOT NULL, dealPrice DECIMAL, FOREIGN KEY (customer_id) REFERENCES customers (id), FOREIGN KEY (product_id) REFERENCES products (id));
+DROP TABLE IF EXISTS hibernate.customer_products;
+CREATE TABLE hibernate.customer_products (customer_id INT NOT NULL, product_id INT NOT NULL, dealPrice DECIMAL DEFAULT 0.0, FOREIGN KEY (customer_id) REFERENCES customers (id), FOREIGN KEY (product_id) REFERENCES products (id));
 INSERT INTO hibernate.customer_products (customer_id, product_id, dealPrice) VALUES
 (1, 1, 24.00),
 (1, 2, 115.00),
@@ -36,3 +38,4 @@ INSERT INTO hibernate.customer_products (customer_id, product_id, dealPrice) VAL
 (4, 8, 79.90),
 (4, 9, 33.00),
 (4, 10, 100.49);
+COMMIT;

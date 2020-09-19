@@ -15,5 +15,6 @@
 
         <mapping class="com.geekbrains.hibernate.krilov.entities.Customer"/>
         <mapping class="com.geekbrains.hibernate.krilov.entities.Product"/>
+        <mapping class="com.geekbrains.hibernate.krilov.entities.Deal"/>
     </session-factory>
 </hibernate-configuration>
