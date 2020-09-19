@@ -16,21 +16,21 @@ public class Customer {
 
     @ManyToMany
     @JoinTable(
-            name = "customer_products",
+            name = "deals",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> cart;
 
     @OneToMany(mappedBy = "customer_id")
-    private List<Deal> dealPrices;
+    private List<Deal> deals;
 
-    public List<Deal> getDealPrices() {
-        return dealPrices;
+    public List<Deal> getDeals() {
+        return deals;
     }
 
-    public void setDealPrices(List<Deal> dealPrices) {
-        this.dealPrices = dealPrices;
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
     }
 
     public Long getId() {

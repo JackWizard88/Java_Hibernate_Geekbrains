@@ -27,18 +27,12 @@ public class CustomerController {
     public static void removeProductFromCart(Session session, Long productId, Long customerId) {
         session.beginTransaction();
         Customer customer = session.get(Customer.class, customerId);
-        List<Product> cart = customer.getCart();
-
 
         //если удалять так, то запись удаляется, но оставшиеся сохраняются с нулевой ценой
-//        for (int i = 0; i < cart.size(); i++) {
-//            if (cart.get(i).getId().equals(productId)) {
-//                cart.remove(i);
-//            }
-//        }
+//        customer.getCart().removeIf(p -> p.getId().equals(productId));
 
         // а этим методом не удаляется из таблицы сделок
-        customer.getDealPrices().removeIf(p -> p.getProduct_id().equals(productId));
+        customer.getDeals().removeIf(p -> p.getProduct_id().equals(productId));
 
         session.getTransaction().commit();
     }
@@ -46,10 +40,10 @@ public class CustomerController {
     public static void getDealPrice(Session session, Long customerId) {
         session.beginTransaction();
         Customer customer = session.get(Customer.class, customerId);
-        List<Deal> dealPrices = customer.getDealPrices();
+        List<Deal> deals = customer.getDeals();
         System.out.println(customer.getName() + ":");
 
-        for (Deal d : dealPrices) {
+        for (Deal d : deals) {
             Product product = session.get(Product.class, d.getProduct_id());
             System.out.println("Product: " + product.getName() + ",  Deal Price: " + d.getDealPrice() + ",  Current Price: " + product.getPrice());
         }
