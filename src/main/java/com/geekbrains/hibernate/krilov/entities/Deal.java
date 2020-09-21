@@ -23,7 +23,6 @@ public class Deal implements Serializable {
     private double dealPrice;
 
 
-
     public Long getId() {
         return id;
     }

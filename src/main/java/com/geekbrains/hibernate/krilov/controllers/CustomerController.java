@@ -47,6 +47,7 @@ public class CustomerController {
 
     public static void removeCustomerById(Session session, Long customerId) {
         session.beginTransaction();
+        session.createQuery("DELETE FROM Deal d WHERE d.customer.id = " + customerId).executeUpdate();
         session.createQuery("DELETE FROM Customer c WHERE c.id = " + customerId).executeUpdate();
         session.getTransaction().commit();
     }

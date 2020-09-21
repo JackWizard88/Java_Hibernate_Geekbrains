@@ -26,6 +26,7 @@ public class ProductController {
 
     public static void removeProductById(Session session, Long productId) {
         session.beginTransaction();
+        session.createQuery("DELETE FROM Deal d WHERE d.product.id = " + productId).executeUpdate();
         session.createQuery("DELETE FROM Product p WHERE p.id = " + productId).executeUpdate();
         session.getTransaction().commit();
     }
