@@ -42,12 +42,12 @@ public class MainApp {
         System.out.println(ProductController.getAllProducts(getSessionFactory().getCurrentSession()));
 
         //удаление товара из корзины покупателя. не работает
-//        System.out.println("===============================================================================");
-//        System.out.println("======= Before delete =======");
-//        CustomerController.getDeals(getSessionFactory().getCurrentSession(), 1L);
-//        CustomerController.removeProductFromCart(getSessionFactory().getCurrentSession(), 2L, 1L);
-//        System.out.println("======= After delete =======");
-//        CustomerController.getDeals(getSessionFactory().getCurrentSession(), 1L);
+        System.out.println("===============================================================================");
+        System.out.println("======= Before delete =======");
+        CustomerController.getDeals(getSessionFactory().getCurrentSession(), 1L);
+        CustomerController.removeProductFromCart(getSessionFactory().getCurrentSession(), 2L, 1L);
+        System.out.println("======= After delete =======");
+        CustomerController.getDeals(getSessionFactory().getCurrentSession(), 1L);
 
     }
 

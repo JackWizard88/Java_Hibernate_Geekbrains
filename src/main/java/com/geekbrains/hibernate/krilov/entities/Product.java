@@ -20,7 +20,7 @@ public class Product {
     @Column(name = "price", precision=10, scale=2)
     private double price;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private List<Deal> deals;
 

@@ -17,7 +17,7 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private List<Deal> deals;
 
