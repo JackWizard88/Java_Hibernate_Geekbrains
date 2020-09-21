@@ -1,7 +1,10 @@
 package com.geekbrains.hibernate.krilov.entities;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
+
 
 @Entity
 @Table(name = "products")
@@ -18,13 +21,12 @@ public class Product {
     @Column(name = "price", precision=10, scale=2)
     private double price;
 
-    @ManyToMany
-    @JoinTable(
-            name = "deals",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id")
-    )
-    private List<Customer> customers;
+    @OneToMany(mappedBy = "product")
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    private List<Deal> deals;
+
+    public Product() {
+    }
 
     public Long getId() {
         return id;
@@ -50,15 +52,12 @@ public class Product {
         this.price = price;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<Deal> getDeals() {
+        return deals;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-
-    public Product() {
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
     }
 
     @Override

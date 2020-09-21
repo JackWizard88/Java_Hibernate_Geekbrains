@@ -1,11 +1,14 @@
 package com.geekbrains.hibernate.krilov.entities;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "customers")
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -14,23 +17,11 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "deals",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> cart;
-
-    @OneToMany(mappedBy = "customer_id")
+    @OneToMany(mappedBy = "customer")
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private List<Deal> deals;
 
-    public List<Deal> getDeals() {
-        return deals;
-    }
-
-    public void setDeals(List<Deal> deals) {
-        this.deals = deals;
+    public Customer() {
     }
 
     public Long getId() {
@@ -49,15 +40,12 @@ public class Customer {
         this.name = name;
     }
 
-    public List<Product> getCart() {
-        return cart;
+    public List<Deal> getDeals() {
+        return deals;
     }
 
-    public void setCart(List<Product> cart) {
-        this.cart = cart;
-    }
-
-    public Customer() {
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
     }
 
     @Override

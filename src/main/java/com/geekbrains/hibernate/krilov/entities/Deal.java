@@ -8,33 +8,48 @@ import java.io.Serializable;
 public class Deal implements Serializable {
 
     @Id
-    @Column(name = "customer_id")
-    private Long customer_id;
+    @Column(name = "id")
+    private Long id;
 
-    @Id
-    @Column(name = "product_id")
-    private Long product_id;
+    @ManyToOne
+    @JoinColumn (name="customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn (name="product_id")
+    private Product product;
 
     @Column(name = "dealPrice")
     private double dealPrice;
 
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public Deal() {
-    }
-
-    public Long getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(Long customer_id) {
-        this.customer_id = customer_id;
-    }
-
-    public Long getProduct_id() {
-        return product_id;
-    }
-
-    public void setProducts_id(Long products_id) {
-        this.product_id = products_id;
     }
 
     public double getDealPrice() {

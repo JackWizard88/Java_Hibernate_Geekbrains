@@ -22,16 +22,33 @@ public class MainApp {
         System.out.println("===============================================================================");
 
         System.out.println("Products list from DB which are in cart of Customer with id = 2");
+
         System.out.println(CustomerController.getProductListByID(getSessionFactory().getCurrentSession(), 2L));
         System.out.println("Customers list from DB who have item with id = 1");
         System.out.println(ProductController.getCustomersListByID(getSessionFactory().getCurrentSession(), 1L));
 
         System.out.println("===============================================================================");
-        System.out.println("======= Before delete =======");
-        CustomerController.getDealPrice(getSessionFactory().getCurrentSession(), 1L);
-        CustomerController.removeProductFromCart(getSessionFactory().getCurrentSession(), 2L, 1L);
-        System.out.println("======= After delete =======");
-        CustomerController.getDealPrice(getSessionFactory().getCurrentSession(), 1L);
+
+        System.out.println("Delete Customer with id = 2");
+        CustomerController.removeCustomerById(getSessionFactory().getCurrentSession(), 2L);
+        System.out.println("Customers list from DB after delete");
+        System.out.println(CustomerController.getAllCustomers(getSessionFactory().getCurrentSession()));
+
+        System.out.println("===============================================================================");
+
+        System.out.println("Delete Product with id = 5");
+        ProductController.removeProductById(getSessionFactory().getCurrentSession(), 5L);
+        System.out.println("Product list from DB after delete");
+        System.out.println(ProductController.getAllProducts(getSessionFactory().getCurrentSession()));
+
+        //удаление товара из корзины покупателя. не работает
+//        System.out.println("===============================================================================");
+//        System.out.println("======= Before delete =======");
+//        CustomerController.getDeals(getSessionFactory().getCurrentSession(), 1L);
+//        CustomerController.removeProductFromCart(getSessionFactory().getCurrentSession(), 2L, 1L);
+//        System.out.println("======= After delete =======");
+//        CustomerController.getDeals(getSessionFactory().getCurrentSession(), 1L);
+
     }
 
     public static SessionFactory getSessionFactory() {

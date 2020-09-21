@@ -4,6 +4,8 @@ import com.geekbrains.hibernate.krilov.entities.Customer;
 import com.geekbrains.hibernate.krilov.entities.Deal;
 import com.geekbrains.hibernate.krilov.entities.Product;
 import org.hibernate.Session;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerController {
@@ -15,36 +17,48 @@ public class CustomerController {
         return customers;
     }
 
+    public static Customer getCustomerByID(Session session, Long id) {
+        session.beginTransaction();
+        Customer customer = session.get(Customer.class, id);
+        session.getTransaction().commit();
+        return customer;
+    }
+
     public static List<Product> getProductListByID(Session session, Long id) {
         session.beginTransaction();
         Customer customer = session.get(Customer.class, id);
-        List<Product> cart = customer.getCart();
-        System.out.println(cart);               // ПОЧЕМУ если эту строку закомментировать то ошибка ленивой инициализации, хотя я должен был достать список продуктов раньше чем закрыл сессию и вернуть его
+        List<Deal> deals = customer.getDeals();
+        List<Product> products = new ArrayList<>();
+        for (Deal d: deals) {
+            products.add(session.get(Product.class, d.getProduct().getId()));
+        }
         session.getTransaction().commit();
-        return cart;
+        return products;
     }
 
     public static void removeProductFromCart(Session session, Long productId, Long customerId) {
         session.beginTransaction();
         Customer customer = session.get(Customer.class, customerId);
 
-        //если удалять так, то запись удаляется, но оставшиеся сохраняются с нулевой ценой
-//        customer.getCart().removeIf(p -> p.getId().equals(productId));
-
-        // а этим методом не удаляется из таблицы сделок
-        customer.getDeals().removeIf(p -> p.getProduct_id().equals(productId));
-
+        //не удаляется из таблицы сделок
+        customer.getDeals().removeIf(p -> p.getProduct().getId().equals(productId));
         session.getTransaction().commit();
     }
 
-    public static void getDealPrice(Session session, Long customerId) {
+    public static void removeCustomerById(Session session, Long customerId) {
+        session.beginTransaction();
+        session.createQuery("DELETE FROM Customer c WHERE c.id = " + customerId).executeUpdate();
+        session.getTransaction().commit();
+    }
+
+    public static void getDeals(Session session, Long customerId) {
         session.beginTransaction();
         Customer customer = session.get(Customer.class, customerId);
         List<Deal> deals = customer.getDeals();
         System.out.println(customer.getName() + ":");
 
         for (Deal d : deals) {
-            Product product = session.get(Product.class, d.getProduct_id());
+            Product product = session.get(Product.class, d.getProduct().getId());
             System.out.println("Product: " + product.getName() + ",  Deal Price: " + d.getDealPrice() + ",  Current Price: " + product.getPrice());
         }
 
